@@ -8,6 +8,7 @@ import { estimateReadingTime } from '../utils/readingTime';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const recentPosts = posts.slice(0, 10);
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -18,7 +19,7 @@ const posts = (await getCollection('blog')).sort(
 		</div>
 		<div class="rows">
 			{
-				posts.map((post) => (
+				recentPosts.map((post) => (
 					<a class="row" href={`/blog/${post.id}/`}>
 						<span class="date">
 							<FormattedDate date={post.data.pubDate} />
@@ -32,7 +33,7 @@ const posts = (await getCollection('blog')).sort(
 		</div>
 		{posts.length === 0 && <p class="empty">まだ記事がありません。</p>}
 		<p class="more">
-			全 {posts.length} 本 — <a href="/archive">アーカイブを見る →</a>
+			showing {recentPosts.length} of {posts.length} — <a href="/archive">more</a>
 		</p>
 	</section>
 </Layout>
@@ -70,13 +71,13 @@ const posts = (await getCollection('blog')).sort(
 		display: grid;
 		grid-template-columns: 96px 1fr 128px 56px;
 		gap: 14px;
-		padding: 11px 6px;
+		padding: 9px 6px;
 		border-bottom: 1px solid var(--border-soft);
 		color: var(--ink);
 		text-decoration: none;
 	}
 	.row:hover {
-		background: var(--surface-alt);
+		background: var(--surface-strong);
 		text-decoration: none;
 	}
 	.row:hover .title {
