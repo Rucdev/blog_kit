@@ -8,16 +8,18 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.1",
     "@astrojs/mdx": "^7.0.8",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "@astrojs/svelte": "^9.0.1",
-    "astro": "^7.2.8",
-    "sharp": "^0.35.0",
+    "astro": "^7.3.2",
+    "sharp": "^0.35.4",
     "svelte": "^5.57.0"
   },
   "allowScripts": {
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "typescript": "^5"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.131.1"
   }
 }
