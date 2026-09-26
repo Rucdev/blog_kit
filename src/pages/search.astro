@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import SearchPalette from '../components/SearchPalette.svelte';
+import SearchPalette from '../components/search/SearchPalette.svelte';
+import type { SearchPost } from '../components/search/search';
 import Layout from '../layouts/Layout.astro';
 import { SITE_TITLE } from '../consts';
 import { estimateReadingTime } from '../utils/readingTime';
@@ -9,7 +10,7 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const index = posts.map((post) => ({
+const index: SearchPost[] = posts.map((post) => ({
 	slug: post.id,
 	title: post.data.title,
 	excerpt: post.data.description,
