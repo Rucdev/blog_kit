@@ -31,25 +31,17 @@ bun run deploy         # ビルド後、手元から wrangler deploy(要 wrangle
    - Deploy command: `bunx wrangler deploy`
    - Root directory: `/`
    - Branch: `main`
-3. 記事サブモジュール(`src/content/blog` → `Rucdev/tech-blog`)は公開リポジトリかつ HTTPS URL なので
-   Workers Builds がそのまま clone する。private 化した場合は動かなくなるので注意
-   - fetch は HTTPS だが、手元から push するには SSH が必要。clone し直した環境では一度だけ次を実行する:
-     `git -C src/content/blog remote set-url --push origin git@github.com:Rucdev/tech-blog.git`
-4. デプロイ後、Worker の Settings → Domains & Routes で `rucdev.com` をカスタムドメインとして追加
-5. `www.rucdev.com` → `rucdev.com` のリダイレクトは Cloudflare の Bulk Redirects か
+3. デプロイ後、Worker の Settings → Domains & Routes で `rucdev.com` をカスタムドメインとして追加
+4. `www.rucdev.com` → `rucdev.com` のリダイレクトは Cloudflare の Bulk Redirects か
    Redirect Rules で設定(Worker 側では扱わない)
 
 ## 記事を公開するとき
 
-記事リポジトリ側に push しただけでは公開されない。`blog_kit` 側でサブモジュールの参照を進めて push する。
-必ず tech-blog を先に push すること。参照先コミットが GitHub に無いと Cloudflare 側の clone が失敗する。
+記事は `src/content/blog/<slug>/index.md` に置く(画像は同じディレクトリ内)。
+`main` に push すれば自動でビルド・公開される。
 
-```sh
-git -C src/content/blog pull origin main
-git add src/content/blog
-git commit -m "update posts"
-git push
-```
+記事は元々 `Rucdev/tech-blog` リポジトリで管理していたが、`git subtree` で履歴ごと取り込んだ。
+tech-blog 側はもう更新しない。
 
 ## 今後の課題
 
